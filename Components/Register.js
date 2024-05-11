@@ -23,6 +23,7 @@ export default function Register() {
 		}
 	}, []);
 
+	console.log('alalytic', analyticsInstance);
 	const handleRegistration = async () => {
 		if (!isValidEmail(email)) {
 			setError('Email invalide');
