@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
-import {isSupported, getAnalytics} from 'firebase/analytics'; // Garder cette importation
-import {useNavigate} from 'react-router-dom';
+import {getAnalytics} from 'firebase/analytics'; // Garder cette importation
 import {app} from '../pages/api/firebase';
 
 export default function Register() {
@@ -9,21 +8,23 @@ export default function Register() {
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [error, setError] = useState('');
-	const navigate = useNavigate();
 
 	function isValidEmail(email) {
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		return emailRegex.test(email);
 	}
 
+	console.log(process.env.API_FIREBASE);
+	console.log('register est monté');
 	useEffect(() => {
-		// Initialiser Firebase Analytics si pris en charge et si côté client
-		if (isSupported() && typeof window !== 'undefined') {
-			const analyticsInstance = getAnalytics(app);
-		}
+		console.log('Le useEffect est rendu !');
+		// if (typeof window !== 'undefined') {
+		// 	const analytics = getAnalytics(app);
+
+		// 	console.log('analyticsInstance', analytics);
+		// }
 	}, []);
 
-	console.log('alalytic', analyticsInstance);
 	const handleRegistration = async () => {
 		if (!isValidEmail(email)) {
 			setError('Email invalide');
@@ -41,7 +42,6 @@ export default function Register() {
 					timerProgressBar: '.inscription-swal-timer',
 				},
 			});
-			navigate('/login');
 		} catch (error) {
 			const errorCode = error.code;
 			const errorMessage = error.message;
