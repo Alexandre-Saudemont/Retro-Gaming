@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
-import {getAnalytics} from 'firebase/analytics'; // Garder cette importation
-import {app} from '../pages/api/firebase';
+import {createUserWithEmailAndPassword} from 'firebase/auth';
+import {auth} from '../pages/utils/firebase.js';
 
 export default function Register() {
 	const [email, setEmail] = useState('');
@@ -13,35 +12,30 @@ export default function Register() {
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		return emailRegex.test(email);
 	}
-
-	console.log(process.env.API_FIREBASE);
-	console.log('register est monté');
-	useEffect(() => {
-		console.log('Le useEffect est rendu !');
-		// if (typeof window !== 'undefined') {
-		// 	const analytics = getAnalytics(app);
-
-		// 	console.log('analyticsInstance', analytics);
-		// }
-	}, []);
-
+	console.log('auth', auth);
 	const handleRegistration = async () => {
 		if (!isValidEmail(email)) {
 			setError('Email invalide');
 			return;
+		} else if (password !== confirmPassword) {
+			setError('Les mots de passe ne correspondent pas');
+			return;
 		}
 		try {
-			const auth = getAuth(app);
 			await createUserWithEmailAndPassword(auth, email, password);
-			Swal.fire({
-				text: `Bonjour ${email} ! Votre compte a bien été créé !`,
-				icon: 'success',
-				timer: 3000,
-				timerProgressBar: true,
-				customClass: {
-					timerProgressBar: '.inscription-swal-timer',
-				},
-			});
+			console.log('Registration');
+			setEmail('');
+			setPassword('');
+
+			// Swal.fire({
+			// 	text: `Bonjour ${email} ! Votre compte a bien été créé !`,
+			// 	icon: 'success',
+			// 	timer: 3000,
+			// 	timerProgressBar: true,
+			// 	customClass: {
+			// 		timerProgressBar: '.inscription-swal-timer',
+			// 	},
+			// });
 		} catch (error) {
 			const errorCode = error.code;
 			const errorMessage = error.message;
@@ -63,13 +57,14 @@ export default function Register() {
 
 				default:
 			}
+			console.log('aprèscreateuser: ' + customErrorMessage);
 			setError(customErrorMessage);
 			console.error(errorCode, customErrorMessage);
 		}
 	};
 	return (
-		<div>
-			<input type='email' name='email' value={email} placeholder='email' onChange={(e) => setEmail(e.target.value)} required />
+		<form onSubmit={handleRegistration} method='POST'>
+			<input type='email' name='email' value={email} placeholder='Email' onChange={(e) => setEmail(e.target.value)} required />
 			<input
 				type='password'
 				name='password'
@@ -85,8 +80,8 @@ export default function Register() {
 				value={confirmPassword}
 				onChange={(e) => setConfirmPassword(e.target.value)}
 			/>
-			<button onClick={handleRegistration}>S'inscrire</button>
+			<button type='submit'>S'inscrire</button>
 			<h1>Je suis le composant Register</h1>
-		</div>
+		</form>
 	);
 }

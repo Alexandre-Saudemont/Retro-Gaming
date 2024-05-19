@@ -1,15 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 
-// Configurer Firebase
-const firebaseConfig = {
-	// Vos paramètres de configuration Firebase ici
-};
-
-if (!firebase.apps.length) {
-	firebase.initializeApp(firebaseConfig);
-}
-
 // Récupérer une référence à Firestore
 const db = firebase.firestore();
 
