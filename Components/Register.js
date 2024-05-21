@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {createUserWithEmailAndPassword} from 'firebase/auth';
 import {auth} from '../pages/utils/firebase.js';
 
@@ -12,8 +12,10 @@ export default function Register() {
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		return emailRegex.test(email);
 	}
-	console.log('auth', auth);
-	const handleRegistration = async () => {
+
+	const handleRegistration = async (e) => {
+		e.preventDefault();
+
 		if (!isValidEmail(email)) {
 			setError('Email invalide');
 			return;
@@ -23,10 +25,10 @@ export default function Register() {
 		}
 		try {
 			await createUserWithEmailAndPassword(auth, email, password);
-			console.log('Registration');
+			console.log('User registered successfully!');
 			setEmail('');
 			setPassword('');
-
+			setConfirmPassword(''); //
 			// Swal.fire({
 			// 	text: `Bonjour ${email} ! Votre compte a bien été créé !`,
 			// 	icon: 'success',
@@ -63,25 +65,27 @@ export default function Register() {
 		}
 	};
 	return (
-		<form onSubmit={handleRegistration} method='POST'>
-			<input type='email' name='email' value={email} placeholder='Email' onChange={(e) => setEmail(e.target.value)} required />
-			<input
-				type='password'
-				name='password'
-				value={password}
-				placeholder='Mot de passe'
-				onChange={(e) => setPassword(e.target.value)}
-				required
-			/>
-			<input
-				type='password'
-				name='confirmPassword'
-				placeholder='Confirmer le mot de passe'
-				value={confirmPassword}
-				onChange={(e) => setConfirmPassword(e.target.value)}
-			/>
-			<button type='submit'>S'inscrire</button>
-			<h1>Je suis le composant Register</h1>
-		</form>
+		<div className='Register'>
+			<form onSubmit={handleRegistration} method='POST'>
+				<input type='email' name='email' value={email} placeholder='Email' onChange={(e) => setEmail(e.target.value)} required />
+				<input
+					type='password'
+					name='password'
+					value={password}
+					placeholder='Mot de passe'
+					onChange={(e) => setPassword(e.target.value)}
+					required
+				/>
+				<input
+					type='password'
+					name='confirmPassword'
+					placeholder='Confirmer le mot de passe'
+					value={confirmPassword}
+					onChange={(e) => setConfirmPassword(e.target.value)}
+				/>
+				<button type='submit'>S'inscrire</button>
+				<h1>Je suis le composant Register</h1>
+			</form>
+		</div>
 	);
 }
