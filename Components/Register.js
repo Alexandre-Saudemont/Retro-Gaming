@@ -1,8 +1,8 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {createUserWithEmailAndPassword} from 'firebase/auth';
 import {auth, db} from '../pages/utils/firebase.js';
-import {redirect} from 'next/navigation';
 import {doc, setDoc} from 'firebase/firestore';
+import {useRouter} from 'next/router';
 import Swal from 'sweetalert2';
 
 export default function Register() {
@@ -10,6 +10,7 @@ export default function Register() {
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [error, setError] = useState('');
+	const router = useRouter();
 
 	function isValidEmail(email) {
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -44,13 +45,15 @@ export default function Register() {
 			Swal.fire({
 				text: `Bonjour ${email} ! Votre compte a bien été créé !`,
 				icon: 'success',
-				timer: 3000,
+				timer: 2500,
 				timerProgressBar: true,
 				customClass: {
 					timerProgressBar: '.inscription-swal-timer',
 				},
 			});
-			redirect('/Login');
+			setTimeout(() => {
+				router.push('/Login');
+			}, 2500);
 		} catch (error) {
 			const errorCode = error.code;
 			const errorMessage = error.message;
