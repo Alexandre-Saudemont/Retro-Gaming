@@ -1,6 +1,9 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {createUserWithEmailAndPassword} from 'firebase/auth';
-import {auth} from '../pages/utils/firebase.js';
+import {auth, db} from '../pages/utils/firebase.js';
+import {redirect} from 'next/navigation';
+import {doc, setDoc} from 'firebase/firestore';
+import Swal from 'sweetalert2';
 
 export default function Register() {
 	const [email, setEmail] = useState('');
@@ -14,6 +17,7 @@ export default function Register() {
 	}
 
 	const handleRegistration = async (e) => {
+		// Prevent page reload which can validate registration with email / password
 		e.preventDefault();
 
 		if (!isValidEmail(email)) {
@@ -24,20 +28,29 @@ export default function Register() {
 			return;
 		}
 		try {
-			await createUserWithEmailAndPassword(auth, email, password);
-			console.log('User registered successfully!');
+			// await createUserWithEmailAndPassword(auth, email, password);
+			const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+			const user = userCredential.user;
+
+			await setDoc(doc(db, 'users', user.uid), {
+				email: user.email,
+				uid: user.uid,
+				createdAt: new Date(),
+			});
+
 			setEmail('');
 			setPassword('');
 			setConfirmPassword(''); //
-			// Swal.fire({
-			// 	text: `Bonjour ${email} ! Votre compte a bien été créé !`,
-			// 	icon: 'success',
-			// 	timer: 3000,
-			// 	timerProgressBar: true,
-			// 	customClass: {
-			// 		timerProgressBar: '.inscription-swal-timer',
-			// 	},
-			// });
+			Swal.fire({
+				text: `Bonjour ${email} ! Votre compte a bien été créé !`,
+				icon: 'success',
+				timer: 3000,
+				timerProgressBar: true,
+				customClass: {
+					timerProgressBar: '.inscription-swal-timer',
+				},
+			});
+			redirect('/Login');
 		} catch (error) {
 			const errorCode = error.code;
 			const errorMessage = error.message;
