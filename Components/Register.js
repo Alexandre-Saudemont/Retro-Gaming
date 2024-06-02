@@ -1,8 +1,10 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState} from 'react';
 import {createUserWithEmailAndPassword} from 'firebase/auth';
 import {auth, db} from '../pages/utils/firebase.js';
 import {doc, setDoc} from 'firebase/firestore';
 import {useRouter} from 'next/router';
+import Image from 'next/image';
+import Link from 'next/link.js';
 import Swal from 'sweetalert2';
 
 export default function Register() {
@@ -16,6 +18,9 @@ export default function Register() {
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		return emailRegex.test(email);
 	}
+	// function navigateHome() {
+	// 	router.push('/');
+	// }
 
 	const handleRegistration = async (e) => {
 		// Prevent page reload which can validate registration with email / password
@@ -82,6 +87,12 @@ export default function Register() {
 	};
 	return (
 		<div className='Register'>
+			<picture>
+				<Link href='/'>
+					<Image src='/icon-home-gameboy.svg' alt='Logo' width={50} height={50} />
+				</Link>
+			</picture>
+
 			<form onSubmit={handleRegistration} method='POST'>
 				<input type='email' name='email' value={email} placeholder='Email' onChange={(e) => setEmail(e.target.value)} required />
 				<input

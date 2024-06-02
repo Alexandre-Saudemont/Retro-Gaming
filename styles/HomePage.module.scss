@@ -1,0 +1,56 @@
+@font-face {
+	font-family: HomePageFont;
+	src: url('../public/fonts/Prototype.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.HomePage {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-height: 100vh;
+	margin: 2rem;
+	font-family: 'HomePageFont', sans-serif;
+	&-titleContainer {
+		background-color: aquamarine;
+	}
+
+	&-cardsContainer {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: wrap;
+		height: 15rem;
+
+		@media (min-width: 600px) {
+			grid-template-columns: 1fr 1fr;
+		}
+
+		@media (min-width: 900px) {
+			grid-template-columns: 1fr 1fr 1fr;
+		}
+
+		@media (min-width: 1200px) {
+			grid-template-columns: 1fr 1fr 1fr 1fr;
+		}
+
+		.card {
+			background-color: aqua;
+			border: 1px solid black;
+			padding: 1rem;
+			border-radius: 0.5rem;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			text-align: center;
+			font-size: 1rem;
+			transition: transform 0.2s;
+			margin: 1rem;
+			height: 100%;
+			width: 90%;
+
+			&:hover {
+				transform: translateY(-5px);
+			}
+		}
+	}
+}
