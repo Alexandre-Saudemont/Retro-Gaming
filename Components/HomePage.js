@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import styles from '../styles/HomePage.module.scss';
+import Image from 'next/image';
 import {fetchGamesGamecube} from '../pages/api/games.js';
 import {useEffect, useState} from 'react';
 
@@ -10,10 +11,9 @@ export default function HomePage() {
 		async function fetchData() {
 			try {
 				console.log('Fetching games...');
-				const gamesData = await fetchGamesGamecube(105);
+				const gamesData = await fetchGamesGamecube(105, 25);
 				console.log('Games data', gamesData);
 				setGames(gamesData);
-				console.log('gamesData', fetchGamesGamecube);
 			} catch (error) {
 				console.error('Error fetching games data:', error);
 			}
@@ -32,8 +32,18 @@ export default function HomePage() {
 				<Link href='/Register'>Register</Link>
 				<section className={styles['HomePage-cardsContainer']}>
 					{games.map((game) => (
-						<div className={styles.card} key={game.count}>
-							{game.name}
+						<div className={styles.card} key={game.id}>
+							{game.background_image && (
+								<Image
+									src={game.background_image}
+									alt={`${game.name} backgrround image`}
+									width={300}
+									height={150}
+									layout='responsive'
+									priority
+								/>
+							)}
+							<h2>{game.name}</h2>
 						</div>
 					))}
 					<div className={styles.card}>Jeu 1</div>
