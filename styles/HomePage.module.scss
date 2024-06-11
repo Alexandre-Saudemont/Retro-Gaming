@@ -12,6 +12,7 @@
 	min-height: 100vh;
 	margin: 2rem;
 	font-family: 'HomePageFont', sans-serif;
+
 	&-titleContainer {
 		background-color: aquamarine;
 	}
@@ -21,7 +22,8 @@
 		justify-content: center;
 		align-items: center;
 		flex-wrap: wrap;
-		height: 15rem;
+		width: 100%;
+		margin-bottom: auto;
 
 		@media (min-width: 600px) {
 			grid-template-columns: 1fr 1fr;
@@ -51,6 +53,23 @@
 			&:hover {
 				transform: translateY(-5px);
 			}
+		}
+	}
+
+	.loadMoreButton {
+		background-color: #0070f3;
+		color: white;
+		border: none;
+		padding: 1rem 2rem;
+		border-radius: 0.5rem;
+		font-size: 1rem;
+		cursor: pointer;
+		transition: background-color 0.3s;
+		margin-top: 2rem;
+		align-self: center;
+
+		&:hover {
+			background-color: #005bb5;
 		}
 	}
 }
