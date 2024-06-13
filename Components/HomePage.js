@@ -8,18 +8,39 @@ export default function HomePage() {
 	const [games, setGames] = useState([]);
 	const [page, setPage] = useState(1);
 	const [loading, setLoading] = useState(false);
+	const [totalPages, setTotalPages] = useState(0);
+
+	const gamesPerPage = 20;
 
 	useEffect(() => {
 		async function fetchData() {
 			setLoading(true);
 			try {
-				console.log('Fetching games...');
+				console.log('Fetching games for page:', page);
 				const gamesData = await fetchGamesGamecube(105, page);
-				setGames((prevGames) => [...prevGames, ...gamesData]);
-				console.log('Games data', gamesData);
-				setGames(gamesData);
+				console.log('Games data:', gamesData);
+
+				// Vérification de la structure des données reçues
+				if (gamesData && Array.isArray(gamesData)) {
+					const totalCount = gamesData.length;
+					const totalPagesCount = Math.ceil(totalCount / gamesPerPage);
+
+					setTotalPages(totalPagesCount);
+
+					// Sélectionner les jeux pour la page courante
+					const startIndex = (page - 1) * gamesPerPage;
+					const selectedGames = gamesData.slice(startIndex, startIndex + gamesPerPage);
+
+					setGames(selectedGames);
+				} else {
+					console.error('Games data is not in expected format or empty:', gamesData);
+					setGames([]);
+					setTotalPages(0);
+				}
 			} catch (error) {
 				console.error('Error fetching games data:', error);
+				setGames([]);
+				setTotalPages(0);
 			} finally {
 				setLoading(false);
 			}
@@ -28,25 +49,33 @@ export default function HomePage() {
 		fetchData();
 	}, [page]);
 
-	function loadMoreGames() {
-		setPage((prevPage) => prevPage + 1);
+	function handlePageChange(pageNumber) {
+		setPage(pageNumber);
 		window.scrollTo({top: 0, behavior: 'smooth'});
+	}
+	function renderPageNumbers() {
+		const pageNumbers = [];
+		// Afficher les boutons de pagination pour chaque page jusqu'à totalPages
+		for (let i = 1; i <= totalPages; i++) {
+			pageNumbers.push(
+				<button key={i} onClick={() => handlePageChange(i)} className={`${styles.pageButton} ${page === i ? styles.active : ''}`}>
+					{i}
+				</button>,
+			);
+		}
+		return pageNumbers;
 	}
 
-	function loadLessGames() {
-		setPage((prevPage) => prevPage - 1);
-		window.scrollTo({top: 0, behavior: 'smooth'});
-	}
 	return (
-		<>
-			<main className={styles.HomePage}>
-				<h1>Retro Gaming</h1>
-				<section className={styles['HomePage-titleContainer']}>
-					<p className={styles.text}>Bienvenue sur Retro Gaming, un site pour répertorier les jeux rétro, principalement Nintendo & Sony</p>
-				</section>
-				<Link href='/Register'>Register</Link>
-				<section className={styles['HomePage-cardsContainer']}>
-					{games.map((game) => (
+		<main className={styles.HomePage}>
+			<h1>Retro Gaming</h1>
+			<section className={styles['HomePage-titleContainer']}>
+				<p className={styles.text}>Bienvenue sur Retro Gaming, un site pour répertorier les jeux rétro, principalement Nintendo & Sony</p>
+			</section>
+			<Link href='/Register'>Register</Link>
+			<section className={styles['HomePage-cardsContainer']}>
+				{games && games.length > 0 ? (
+					games.map((game) => (
 						<div className={styles.card} key={game.id}>
 							{game.background_image && (
 								<Image
@@ -60,34 +89,14 @@ export default function HomePage() {
 							)}
 							<h2 className={styles.cardTitle}>{game.name}</h2>
 						</div>
-					))}
-				</section>
-				{loading ? (
+					))
+				) : loading ? (
 					<p>Loading...</p>
 				) : (
-					<>
-						<Image
-							src='../next-arrow.svg'
-							alt='Page Suivante'
-							onClick={loadMoreGames}
-							className={styles.loadMoreButton}
-							width={30}
-							height={30}
-						/>
-
-						{page > 1 && (
-							<Image
-								src='../previous-arrow.svg'
-								alt='Page Précédente'
-								onClick={loadLessGames}
-								className={styles.loadMoreButton}
-								width={30}
-								height={30}
-							/>
-						)}
-					</>
+					<p>No games available</p>
 				)}
-			</main>
-		</>
+			</section>
+			<div className={styles.paginationContainer}>{renderPageNumbers()}</div>
+		</main>
 	);
 }
