@@ -55,7 +55,13 @@
 			}
 		}
 	}
-
+	.pageButton {
+		padding: 0.5rem;
+		font-size: 1.3rem;
+		&:hover {
+			cursor: pointer !important;
+		}
+	}
 	.loadMoreButton {
 		background-color: #0070f3;
 		color: white;

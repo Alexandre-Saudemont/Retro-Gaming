@@ -17,23 +17,19 @@ export default function HomePage() {
 			setLoading(true);
 			try {
 				console.log('Fetching games for page:', page);
-				const gamesData = await fetchGamesGamecube(105, page);
-				console.log('Games data:', gamesData);
+				const data = await fetchGamesGamecube(105, page);
+				console.log('Games data:', data);
 
-				// Vérification de la structure des données reçues
-				if (gamesData && Array.isArray(gamesData)) {
-					const totalCount = gamesData.length;
+				if (data && data.results && Array.isArray(data.results)) {
+					const totalCount = data.count; // Nombre total de jeux
 					const totalPagesCount = Math.ceil(totalCount / gamesPerPage);
+					console.log('Total count:', totalCount);
+					console.log('Total pages count:', totalPagesCount);
 
 					setTotalPages(totalPagesCount);
-
-					// Sélectionner les jeux pour la page courante
-					const startIndex = (page - 1) * gamesPerPage;
-					const selectedGames = gamesData.slice(startIndex, startIndex + gamesPerPage);
-
-					setGames(selectedGames);
+					setGames(data.results);
 				} else {
-					console.error('Games data is not in expected format or empty:', gamesData);
+					console.error('Games data is not in expected format or empty:', data);
 					setGames([]);
 					setTotalPages(0);
 				}
@@ -53,16 +49,57 @@ export default function HomePage() {
 		setPage(pageNumber);
 		window.scrollTo({top: 0, behavior: 'smooth'});
 	}
+
 	function renderPageNumbers() {
 		const pageNumbers = [];
-		// Afficher les boutons de pagination pour chaque page jusqu'à totalPages
-		for (let i = 1; i <= totalPages; i++) {
-			pageNumbers.push(
-				<button key={i} onClick={() => handlePageChange(i)} className={`${styles.pageButton} ${page === i ? styles.active : ''}`}>
-					{i}
-				</button>,
-			);
+
+		// Nombre maximal de boutons de pagination à afficher
+		const maxButtonsToShow = 5;
+
+		// Calculer l'indice de début et de fin des boutons de pagination
+		let start = Math.max(1, page - Math.floor(maxButtonsToShow / 2));
+		let end = Math.min(totalPages, start + maxButtonsToShow - 1);
+
+		// Ajuster l'indice de début si nécessaire pour afficher maxButtonsToShow boutons
+		if (end - start + 1 < maxButtonsToShow) {
+			start = Math.max(1, end - maxButtonsToShow + 1);
 		}
+
+		// Fonction pour générer un bouton de pagination cliquable
+		const renderPageButton = (pageNumber) => (
+			<a
+				key={pageNumber}
+				onClick={() => handlePageChange(pageNumber)}
+				className={`${styles.pageButton} ${page === pageNumber ? styles.active : ''}`}>
+				{pageNumber}
+			</a>
+		);
+
+		// Bouton pour la première page
+		if (start > 1) {
+			pageNumbers.push(renderPageButton(1));
+			if (start > 2) {
+				pageNumbers.push(
+					<span className={styles.pageButton} key='ellipsis-start'>
+						...
+					</span>,
+				);
+			}
+		}
+
+		// Boutons pour les pages intermédiaires
+		for (let i = start; i <= end; i++) {
+			pageNumbers.push(renderPageButton(i));
+		}
+
+		// Bouton pour la dernière page
+		if (end < totalPages) {
+			if (end < totalPages - 1) {
+				pageNumbers.push(<span key='ellipsis-end'>...</span>);
+			}
+			pageNumbers.push(renderPageButton(totalPages));
+		}
+
 		return pageNumbers;
 	}
 
@@ -76,7 +113,7 @@ export default function HomePage() {
 			<section className={styles['HomePage-cardsContainer']}>
 				{games && games.length > 0 ? (
 					games.map((game) => (
-						<div className={styles.card} key={game.id}>
+						<div className={styles.card} key={game.slug}>
 							{game.background_image && (
 								<Image
 									src={game.background_image}
@@ -100,3 +137,4 @@ export default function HomePage() {
 		</main>
 	);
 }
+1;
