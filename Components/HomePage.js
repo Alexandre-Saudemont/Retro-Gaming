@@ -10,7 +10,7 @@ export default function HomePage() {
 	const [loading, setLoading] = useState(false);
 	const [totalPages, setTotalPages] = useState(0);
 
-	const gamesPerPage = 20;
+	const gamesPerPage = 10;
 
 	useEffect(() => {
 		async function fetchData() {
@@ -21,7 +21,7 @@ export default function HomePage() {
 				console.log('Games data:', data);
 
 				if (data && data.results && Array.isArray(data.results)) {
-					const totalCount = data.count; // Nombre total de jeux
+					const totalCount = data.count;
 					const totalPagesCount = Math.ceil(totalCount / gamesPerPage);
 					console.log('Total count:', totalCount);
 					console.log('Total pages count:', totalPagesCount);
@@ -53,19 +53,15 @@ export default function HomePage() {
 	function renderPageNumbers() {
 		const pageNumbers = [];
 
-		// Nombre maximal de boutons de pagination à afficher
-		const maxButtonsToShow = 5;
+		const maxButtonsToShow = 3;
 
-		// Calculer l'indice de début et de fin des boutons de pagination
 		let start = Math.max(1, page - Math.floor(maxButtonsToShow / 2));
 		let end = Math.min(totalPages, start + maxButtonsToShow - 1);
 
-		// Ajuster l'indice de début si nécessaire pour afficher maxButtonsToShow boutons
 		if (end - start + 1 < maxButtonsToShow) {
 			start = Math.max(1, end - maxButtonsToShow + 1);
 		}
 
-		// Fonction pour générer un bouton de pagination cliquable
 		const renderPageButton = (pageNumber) => (
 			<a
 				key={pageNumber}
@@ -75,7 +71,6 @@ export default function HomePage() {
 			</a>
 		);
 
-		// Bouton pour la première page
 		if (start > 1) {
 			pageNumbers.push(renderPageButton(1));
 			if (start > 2) {
@@ -87,12 +82,10 @@ export default function HomePage() {
 			}
 		}
 
-		// Boutons pour les pages intermédiaires
 		for (let i = start; i <= end; i++) {
 			pageNumbers.push(renderPageButton(i));
 		}
 
-		// Bouton pour la dernière page
 		if (end < totalPages) {
 			if (end < totalPages - 1) {
 				pageNumbers.push(<span key='ellipsis-end'>...</span>);
