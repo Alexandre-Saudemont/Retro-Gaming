@@ -9,6 +9,7 @@ export default function HomePage() {
 	const [page, setPage] = useState(1);
 	const [loading, setLoading] = useState(false);
 	const [totalPages, setTotalPages] = useState(0);
+	const [menuOpen, setMenuOpen] = useState(false);
 
 	const gamesPerPage = 10;
 
@@ -98,11 +99,28 @@ export default function HomePage() {
 
 	return (
 		<main className={styles.HomePage}>
+			<header className={styles.header}>
+				<div className={styles.burgerMenu} onClick={() => setMenuOpen(!menuOpen)}></div>
+				<nav className={`${styles.showMenu}`}>
+					<Link href='/' src="'/icon-home-gameboy.svg">
+						<Image src='/icon-home-gameboy.svg' alt='home icon' width={50} height={50}></Image>
+					</Link>
+					<Link href='/Register' className={styles['HomePage-link']}>
+						<Image src='/user-register2.svg' alt='icon register' width={60} height={60}></Image>
+					</Link>
+					<Link href='/About'>
+						<Image src='/search-icon.svg' alt='icon about' width={50} height={50}></Image>
+					</Link>
+					<Link href='/About'>
+						<Image src='/about-icon.svg' alt='icon about' width={50} height={50}></Image>
+					</Link>
+				</nav>
+			</header>
 			<h1>Retro Gaming</h1>
 			<section className={styles['HomePage-titleContainer']}>
 				<p className={styles.text}>Bienvenue sur Retro Gaming, un site pour répertorier les jeux rétro, principalement Nintendo & Sony</p>
 			</section>
-			<Link href='/Register'>Register</Link>
+
 			<section className={styles['HomePage-cardsContainer']}>
 				{games && games.length > 0 ? (
 					games.map((game) => (

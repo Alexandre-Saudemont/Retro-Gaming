@@ -1,10 +1,3 @@
-@font-face {
-	font-family: HomePageFont;
-	src: url('../public/fonts/Prototype.ttf') format('truetype');
-	font-weight: normal;
-	font-style: normal;
-}
-
 .HomePage {
 	display: flex;
 	flex-direction: column;
@@ -14,7 +7,6 @@
 	font-family: 'HomePageFont', sans-serif;
 
 	&-titleContainer {
-		background-color: aquamarine;
 	}
 
 	&-cardsContainer {
@@ -55,27 +47,91 @@
 			}
 		}
 	}
-	.pageButton {
-		padding: 0.5rem;
-		font-size: 1.3rem;
-		&:hover {
-			cursor: pointer !important;
-		}
-	}
-	.loadMoreButton {
-		background-color: #0070f3;
-		color: white;
-		border: none;
-		padding: 1rem 2rem;
-		border-radius: 0.5rem;
-		font-size: 1rem;
-		cursor: pointer;
-		transition: background-color 0.3s;
-		margin-top: 2rem;
-		align-self: center;
+}
 
-		&:hover {
-			background-color: #005bb5;
+.header {
+	position: fixed;
+	top: 0.5rem;
+	right: 1rem;
+
+	.burgerMenu {
+		font-size: 2rem;
+		cursor: pointer;
+		color: white;
+	}
+
+	.navMenu {
+		display: none;
+		flex-direction: column;
+		background-color: #444;
+		width: 100%;
+		position: absolute;
+		top: 60px;
+		right: 0;
+
+		a {
+			padding: 5rem 0 2rem 0;
+			color: white;
+			text-decoration: none;
+
+			&:hover {
+				background-color: #555;
+			}
 		}
 	}
+
+	.showMenu {
+		display: flex;
+		background-color: aliceblue;
+
+		right: 0;
+		height: 10%;
+		position: fixed;
+		width: 100%;
+
+		align-items: center;
+		justify-content: space-around;
+		bottom: 0;
+		width: 100%;
+	}
+}
+
+.aboutIcon {
+	font-size: smaller;
+}
+.pageButton {
+	padding: 0.5rem;
+	font-size: 1.3rem;
+
+	&:hover {
+		cursor: pointer !important;
+	}
+}
+
+.loadMoreButton {
+	background-color: #0070f3;
+	color: white;
+	border: none;
+	padding: 1rem 2rem;
+	border-radius: 0.5rem;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: background-color 0.3s;
+	margin-top: 2rem;
+	align-self: center;
+
+	&:hover {
+		background-color: #005bb5;
+	}
+}
+
+.paginationContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 2rem 0;
+}
+
+.active {
+	font-weight: bold;
 }
