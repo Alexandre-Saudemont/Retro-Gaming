@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+<<<<<<< HEAD
 const nextConfig = {
 	reactStrictMode: true,
 	images: {
@@ -15,5 +16,8 @@ const nextConfig = {
 	// 	domains: ['media.rawg.io'],
 	// },
 };
+=======
+const nextConfig = {};
+>>>>>>> main
 
 export default nextConfig;
