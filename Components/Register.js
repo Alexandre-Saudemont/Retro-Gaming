@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, {useState} from 'react';
 import {createUserWithEmailAndPassword} from 'firebase/auth';
 import {auth, db} from '../pages/utils/firebase.js';
@@ -114,12 +113,6 @@ export default function Register() {
 				<button type='submit'>S'inscrire</button>
 				<h1>Je suis le composant Register</h1>
 			</form>
-=======
-export default function Register() {
-	return (
-		<div>
-			<h1>Im in the register page</h1>
->>>>>>> main
 		</div>
 	);
 }

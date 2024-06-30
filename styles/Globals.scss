@@ -1,9 +1,12 @@
+@import './fonts.scss';
+
 body {
 	font-family: 'HomePageFont', sans-serif;
 	background: linear-gradient(45deg, #ffcc00, #ff6699, #33ccff);
 	background-size: 50% 100%;
 	animation: GradientBackground 15s ease infinite;
 	color: #ffffff;
+	font-family: 'Retro Gaming', sans-serif;
 }
 
 @keyframes GradientBackground {
