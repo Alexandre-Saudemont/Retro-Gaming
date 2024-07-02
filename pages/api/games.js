@@ -10,7 +10,7 @@ export async function fetchGamesGamecube(platformId, page = 1) {
 				page_size: 10, // Limite le nombre de résultats par page
 			},
 		});
-		return response.data; // Retourne toute la réponse
+		return response.data;
 	} catch (error) {
 		console.error('Error fetching games data:', error);
 		throw error;

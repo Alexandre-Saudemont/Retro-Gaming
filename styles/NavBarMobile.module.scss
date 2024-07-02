@@ -1,0 +1,22 @@
+.NavBarMobile {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	position: relative;
+	padding-bottom: 60px;
+}
+
+.showMenu {
+	display: flex;
+	background-color: aliceblue;
+
+	right: 0;
+	height: 10%;
+	position: fixed;
+	width: 100%;
+
+	align-items: center;
+	justify-content: space-around;
+	bottom: 0;
+	width: 100%;
+}

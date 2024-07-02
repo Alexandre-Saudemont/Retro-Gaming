@@ -86,7 +86,7 @@ export default function Register() {
 		}
 	};
 	return (
-		<div className='Register'>
+		<div className='Register-container'>
 			<picture>
 				<Link href='/'>
 					<Image src='/icon-home-gameboy.svg' alt='Logo' width={50} height={50} />
@@ -111,7 +111,6 @@ export default function Register() {
 					onChange={(e) => setConfirmPassword(e.target.value)}
 				/>
 				<button type='submit'>S'inscrire</button>
-				<h1>Je suis le composant Register</h1>
 			</form>
 		</div>
 	);

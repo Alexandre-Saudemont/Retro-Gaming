@@ -9,7 +9,6 @@ export default function HomePage() {
 	const [page, setPage] = useState(1);
 	const [loading, setLoading] = useState(false);
 	const [totalPages, setTotalPages] = useState(0);
-	const [menuOpen, setMenuOpen] = useState(false);
 
 	const gamesPerPage = 10;
 
@@ -100,8 +99,7 @@ export default function HomePage() {
 	return (
 		<main className={styles.HomePage}>
 			<header className={styles.header}>
-				<div className={styles.burgerMenu} onClick={() => setMenuOpen(!menuOpen)}></div>
-				<nav className={`${styles.showMenu}`}>
+				{/* <nav className={`${styles.showMenu}`}>
 					<Link href='/' src="'/icon-home-gameboy.svg">
 						<Image src='/icon-home-gameboy.svg' alt='home icon' width={50} height={50}></Image>
 					</Link>
@@ -114,7 +112,7 @@ export default function HomePage() {
 					<Link href='/About'>
 						<Image src='/about-icon.svg' alt='icon about' width={50} height={50}></Image>
 					</Link>
-				</nav>
+				</nav> */}
 			</header>
 			<h1>Retro Gaming</h1>
 			<section className={styles['HomePage-titleContainer']}>
