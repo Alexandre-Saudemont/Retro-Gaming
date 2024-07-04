@@ -87,15 +87,24 @@ export default function Register() {
 	};
 	return (
 		<div className='Register-container'>
-			<picture>
+			<picture className='Register-image-container'>
 				<Link href='/'>
 					<Image src='/icon-home-gameboy.svg' alt='Logo' width={50} height={50} />
 				</Link>
 			</picture>
 
-			<form onSubmit={handleRegistration} method='POST'>
-				<input type='email' name='email' value={email} placeholder='Email' onChange={(e) => setEmail(e.target.value)} required />
+			<form className='Register-form' onSubmit={handleRegistration} method='POST'>
 				<input
+					className='Register-input'
+					type='email'
+					name='email'
+					value={email}
+					placeholder='Email'
+					onChange={(e) => setEmail(e.target.value)}
+					required
+				/>
+				<input
+					className='Register-input'
 					type='password'
 					name='password'
 					value={password}
@@ -104,13 +113,16 @@ export default function Register() {
 					required
 				/>
 				<input
+					className='Register-input'
 					type='password'
 					name='confirmPassword'
 					placeholder='Confirmer le mot de passe'
 					value={confirmPassword}
 					onChange={(e) => setConfirmPassword(e.target.value)}
 				/>
-				<button type='submit'>S'inscrire</button>
+				<button className='Register-button' type='submit'>
+					S'inscrire
+				</button>
 			</form>
 		</div>
 	);

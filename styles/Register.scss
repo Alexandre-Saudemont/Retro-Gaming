@@ -3,8 +3,46 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-
 	margin: auto;
 	padding: 2rem;
-	height: 100vh;
+
+	& .Register-image-container {
+		position: fixed;
+		top: 0;
+		left: 0;
+		padding: 2rem;
+	}
+
+	& .Register-form {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	& .Register-input {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	& .Register-input {
+		padding: 1rem;
+		margin: 1rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	& .Register-button {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		font-size: large;
+		border-radius: 7px;
+		background-color: aqua;
+	}
 }
