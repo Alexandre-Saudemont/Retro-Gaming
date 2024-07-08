@@ -4,14 +4,13 @@
 	align-items: center;
 	justify-content: center;
 	margin: auto;
-	padding: 2rem;
 
-	& .Register-image-container {
-		position: fixed;
-		top: 0;
-		left: 0;
-		padding: 2rem;
-	}
+	// & .Register-image-container {
+	// 	position: fixed;
+	// 	top: 0;
+	// 	left: 0;
+	// 	padding: 2rem;
+	// }
 
 	& .Register-form {
 		display: flex;
@@ -37,12 +36,17 @@
 	}
 
 	& .Register-button {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		font-size: large;
-		border-radius: 7px;
-		background-color: aqua;
+		border-radius: 12px;
+		cursor: pointer;
+		font-size: 1.2rem;
+		font-weight: 700;
+		padding: 1rem 1.2rem;
+		border: 0;
+		user-select: none;
+		margin-top: 2rem;
+	}
+
+	.Register-button:hover {
+		box-shadow: #121212 0 0 0 3px, transparent 0 0 0 0;
 	}
 }

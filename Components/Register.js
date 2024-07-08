@@ -87,12 +87,12 @@ export default function Register() {
 	};
 	return (
 		<div className='Register-container'>
-			<picture className='Register-image-container'>
+			{/* <picture className='Register-image-container'>
 				<Link href='/'>
 					<Image src='/icon-home-gameboy.svg' alt='Logo' width={50} height={50} />
 				</Link>
-			</picture>
-
+			</picture> */}
+			<h1> Nous rejoindre !</h1>
 			<form className='Register-form' onSubmit={handleRegistration} method='POST'>
 				<input
 					className='Register-input'
