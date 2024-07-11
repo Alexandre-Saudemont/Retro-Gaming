@@ -1,21 +1,52 @@
-.NavBarMobile {
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
+.NavBarMobileWrapper {
+	display: block;
 	position: relative;
+	padding-bottom: 4rem;
+}
+
+.NavBarMobile {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	z-index: 1000;
+	left: 0;
 }
 
 .showMenu {
 	display: flex;
 	background-color: aliceblue;
-
-	right: 0;
-	height: 10%;
-	position: fixed;
-	width: 100%;
-
-	align-items: center;
 	justify-content: space-around;
-	bottom: 0;
+	align-items: center;
+	padding: 1rem 0;
 	width: 100%;
+}
+
+.searchIcon {
+	cursor: pointer;
+}
+
+.searchBar {
+	display: flex;
+	justify-content: center;
+	background-color: white;
+	padding: 0.5rem;
+	border-bottom: 1px solid #ccc;
+	width: 100%;
+	position: absolute;
+	bottom: 100%;
+	left: 0;
+
+	input {
+		width: 80%;
+		padding: 0.5rem;
+		font-size: 1rem;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+	}
+}
+
+@media (min-width: 769px) {
+	.NavBarMobileWrapper {
+		display: none;
+	}
 }
