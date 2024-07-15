@@ -2,21 +2,42 @@ import {useState} from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from '../styles/NavBarMobile.module.scss';
+import {fetchGamesGamecube} from '@/pages/api/games';
 
 export default function NavBarMobile({children}) {
 	const [showSearch, setShowSearch] = useState(false);
+	const [value, setValue] = useState('');
+	const [games, setGames] = useState([]);
 
 	const handleSearchClick = () => {
 		setShowSearch(!showSearch);
 	};
 
+	function handleChange(event) {
+		setValue(event.target.value);
+		requestForFilteredGames(event.target.value);
+	}
+
+	async function requestForFilteredGames(gameSearched) {
+		try {
+			const response = await fetchGamesGamecube();
+			const searchGamesFiltered = response.data.filter((games) => {
+				const gamesToLowerCase = games.name.toLowerCase();
+				return gamesToLowerCase.includes(gameSearched.toLowerCase());
+			});
+
+			setGames(searchGamesFiltered);
+		} catch (error) {
+			console.error(error);
+		}
+	}
 	return (
 		<div className={styles.NavBarMobileWrapper}>
 			{children}
 			<div className={styles.NavBarMobile}>
 				{showSearch && (
 					<div className={styles.searchBar}>
-						<input type='text' placeholder='Rechercher...' />
+						<input type='search' value={value} onChange={handleChange} placeholder='Rechercher...' />
 					</div>
 				)}
 				<nav className={styles.showMenu}>
