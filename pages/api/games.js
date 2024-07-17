@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-export async function fetchGamesGamecube(platformId, page = 1) {
+export async function fetchGamesGamecube(platformId) {
 	try {
 		const response = await axios.get(`https://api.rawg.io/api/games`, {
 			params: {
 				key: process.env.NEXT_PUBLIC_API_RAWG,
 				platforms: platformId,
-				page: page,
-				page_size: 10, // Limite le nombre de résultats par page
+				// page: page,
+				// page_size: 10, // Limite le nombre de résultats par page
 			},
 		});
 		return response.data;

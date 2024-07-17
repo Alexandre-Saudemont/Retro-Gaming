@@ -21,8 +21,10 @@ export default function NavBarMobile({children}) {
 	async function requestForFilteredGames(gameSearched) {
 		try {
 			const response = await fetchGamesGamecube();
-			const searchGamesFiltered = response.data.filter((games) => {
-				const gamesToLowerCase = games.name.toLowerCase();
+			const gamesData = response.results ?? [];
+			console.log('api response:', response);
+			const searchGamesFiltered = gamesData.filter((game) => {
+				const gamesToLowerCase = game.name.toLowerCase();
 				return gamesToLowerCase.includes(gameSearched.toLowerCase());
 			});
 
@@ -31,6 +33,8 @@ export default function NavBarMobile({children}) {
 			console.error(error);
 		}
 	}
+
+	console.log('games state:', games);
 	return (
 		<div className={styles.NavBarMobileWrapper}>
 			{children}
