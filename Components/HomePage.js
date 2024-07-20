@@ -9,15 +9,22 @@ export default function HomePage() {
 	const [page, setPage] = useState(1);
 	const [loading, setLoading] = useState(false);
 	const [totalPages, setTotalPages] = useState(0);
+	const [consoleType, setConsoleType] = useState('gamecube');
 
 	const gamesPerPage = 10;
 
+	const consoleTypeToID = {
+		gamecube: 105,
+		supernes: 106,
+		playstations: 107,
+	};
 	useEffect(() => {
 		async function fetchData() {
 			setLoading(true);
 			try {
+				const consoleTypeID = consoleTypeToID[consoleType];
 				console.log('Fetching games for page:', page);
-				const data = await fetchGamesGamecube(105, page);
+				const data = await fetchGamesGamecube(page, consoleTypeID);
 				console.log('Games data:', data);
 
 				if (data && data.results && Array.isArray(data.results)) {
@@ -43,7 +50,12 @@ export default function HomePage() {
 		}
 
 		fetchData();
-	}, [page]);
+	}, [page, consoleType]);
+
+	function handleGameTypeChange(type) {
+		setConsoleType(type);
+		setPage(1);
+	}
 
 	function handlePageChange(pageNumber) {
 		setPage(pageNumber);
@@ -52,7 +64,6 @@ export default function HomePage() {
 
 	function renderPageNumbers() {
 		const pageNumbers = [];
-
 		const maxButtonsToShow = 3;
 
 		let start = Math.max(1, page - Math.floor(maxButtonsToShow / 2));
@@ -99,7 +110,7 @@ export default function HomePage() {
 	return (
 		<main className={styles.HomePage}>
 			<header className={styles.header}>
-				{/* <nav className={`${styles.showMenu}`}>
+				{/* <nav className={`${styles.showMenu}`}>1
 					<Link href='/' src="'/icon-home-gameboy.svg">
 						<Image src='/icon-home-gameboy.svg' alt='home icon' width={50} height={50}></Image>
 					</Link>
@@ -118,7 +129,23 @@ export default function HomePage() {
 			<section className={styles['HomePage-titleContainer']}>
 				<p className={styles.text}>Bienvenue sur Retro Gaming, un site pour répertorier les jeux rétro, principalement Nintendo & Sony</p>
 			</section>
-
+			<ul>
+				<li>
+					<a className={styles['HomePage-LinkTypeGame']} onClick={() => handleGameTypeChange('gamecube')}>
+						GameCube
+					</a>
+				</li>
+				<li>
+					<a className={styles['HomePage-LinkTypeGame']} onClick={() => handleGameTypeChange('supernes')}>
+						Super NES
+					</a>
+				</li>
+				<li>
+					<a className={styles['HomePage-LinkTypeGame']} onClick={() => handleGameTypeChange('playstation')}>
+						PlayStation
+					</a>
+				</li>
+			</ul>
 			<section className={styles['HomePage-cardsContainer']}>
 				{games && games.length > 0 ? (
 					games.map((game) => (

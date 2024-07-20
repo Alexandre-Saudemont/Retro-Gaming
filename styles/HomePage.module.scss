@@ -5,6 +5,10 @@
 	min-height: 100vh;
 	margin: 2rem;
 
+	&-LinkTypeGame:hover {
+		cursor: pointer;
+	}
+
 	&-cardsContainer {
 		display: flex;
 		justify-content: center;
